@@ -1,0 +1,28 @@
+# --- Binários e Executáveis ---
+*.exe
+*.out
+*.app
+*.dll
+sistema_jatos
+
+# --- Arquivos de Objeto (Intermediários de compilação) ---
+*.o
+*.obj
+
+# --- Pastas de Build (CMake) ---
+build/
+bin/
+lib/
+
+# --- Arquivos gerados pelo CMake na raiz  ---
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# --- Configurações do VS Code ---
+.vscode/
+
+# --- Arquivos do Sistema Operacional ---
+.DS_Store
+Thumbs.db
