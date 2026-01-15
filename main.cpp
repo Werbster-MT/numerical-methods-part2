@@ -1,4 +1,4 @@
-#include "app/SistemaJatos.hpp"
+#include "./app/SistemaJatos.hpp"
 
 int main() {
     SistemaJatos sistema;

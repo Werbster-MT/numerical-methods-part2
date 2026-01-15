@@ -1,8 +1,7 @@
 #pragma once
 #include "../relatorios/Relatorio.hpp"
 #include "../menu/Menu.hpp"
-
-using namespace std;
+#include "../metodos/SistemaLinear.hpp"
 
 using std::cout;
 using std::endl;
@@ -15,8 +14,13 @@ class SistemaJatos {
     private:
         Relatorio relatorio;
         Menu menu;
+
+        SistemaLinear lerSistemaManual();
+        SistemaLinear sistemaCalibracao();
+        SistemaLinear obterSistema();
+
     public:
-        SistemaJatos();
+        // SistemaJatos();
 
         void executar();
 };

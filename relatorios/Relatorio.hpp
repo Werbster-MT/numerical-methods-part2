@@ -14,8 +14,9 @@ using std::left;
 using std::right;
 
 class Relatorio {
-    void imprimirQuadroResposta(const std::vector<double> deslocamentos);
-    void imprimirQuadroResposta(const std::vector<double> deslocamentos_metodo01, const std::vector<double> deslocamentos_metodo02);
+    public:
+        void imprimirQuadroResposta(const std::vector<double> deslocamentos);
+        void imprimirQuadroComparativo(const std::vector<double> deslocamentos_metodo01, const std::vector<double> deslocamentos_metodo02);
 };
 
 #endif // RELATORIO_HPP
