@@ -93,7 +93,9 @@ void SistemaJatos::executar() {
                 case 1: {
                     std::cout << "\n[Calculando via Fatoracao LU...]\n";
                     SistemaLinear sistema = obterSistema();
-                    std::vector<double> d = solverLU.resolver(sistema);
+                    // std::vector<double> d, y = solverLU.resolver(sistema), solverLU.imprimir_D_Y(d, y);
+                    auto [d, y] = solverLU.resolver(sistema);
+                    relatorio.imprimir_D_Y(d, y);
                     relatorio.imprimirQuadroResposta(d);
                     break;
                 }
@@ -106,16 +108,33 @@ void SistemaJatos::executar() {
                     break;
                 }
 
+                // case 3: {
+                //     std::cout << "\n[Realizando Analise Comparativa...]\n";
+                //     SistemaLinear sistema = obterSistema();
+                //     std::vector<double> d_lu  = solverLU.resolver(sistema);
+                //     // std::pair<vector<double> d_lu, vector<double>> _ = solverLU.resolver(sistema);
+                //     std::vector<double> d_ldp = solverLDP.resolver(sistema);
+
+                //     relatorio.imprimirQuadroComparativo(d_lu, d_ldp);
+
+                //     std::cout << "Analise Estrutural (Baseada no LDP):\n";
+                //     relatorio.imprimirQuadroResposta(d_ldp);
+                //     break;
+                // }
+
                 case 3: {
                     std::cout << "\n[Realizando Analise Comparativa...]\n";
+
                     SistemaLinear sistema = obterSistema();
-                    std::vector<double> d_lu  = solverLU.resolver(sistema);
-                    std::vector<double> d_ldp = solverLDP.resolver(sistema);
+
+                    auto [d_lu, y_lu] = solverLU.resolver(sistema);
+                    vector<double> d_ldp = solverLDP.resolver(sistema);
 
                     relatorio.imprimirQuadroComparativo(d_lu, d_ldp);
 
                     std::cout << "Analise Estrutural (Baseada no LDP):\n";
                     relatorio.imprimirQuadroResposta(d_ldp);
+
                     break;
                 }
 

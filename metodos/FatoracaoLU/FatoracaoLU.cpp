@@ -1,10 +1,11 @@
 #include "FatoracaoLU.hpp"
 #include <vector>
 #include <stdexcept>
+#include <utility>
 
 using namespace std;
 
-vector<double> FatoracaoLU::resolver(const SistemaLinear& sistema) {
+std::pair<vector<double>, vector<double>> FatoracaoLU::resolver(const SistemaLinear& sistema) {
 
     int n = sistema.n;
     vector<vector<double>> A = sistema.A;
@@ -72,5 +73,5 @@ vector<double> FatoracaoLU::resolver(const SistemaLinear& sistema) {
         d[i] = (y[i] - soma) / U[i][i];
     }
 
-    return d;
+    return {d, y};
 };

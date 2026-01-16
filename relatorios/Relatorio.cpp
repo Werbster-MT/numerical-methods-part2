@@ -6,8 +6,22 @@
 
 using namespace std;
 
+// função para imprimir vetores D e Y da fatoração LU
+void Relatorio::imprimir_D_Y(const vector<double>& D, const vector<double>& Y) {
+    cout << "\nVetor D (Deslocamentos):\n";
+    for (size_t i = 0; i < D.size(); ++i) {
+        cout << "D[" << i + 1 << "] = " << D[i] << " cm" << endl;
+    }
+
+    // vetor para calcular D
+    cout << "\nVetor Y:\n";
+    for (size_t i = 0; i < Y.size(); ++i) {
+        cout << "Y[" << i + 1 << "] = " << Y[i] << endl;
+    }
+}
+
 void Relatorio::imprimirQuadroResposta(const std::vector<double> deslocamentos) {
-    cout << "\n>>> QUADRO DE RESPOSTA <<<\n";
+    cout << "\n>>> QUADRO DE RESPOSTA (D) <<<\n";
     cout << setprecision(6) << fixed;
     bool explodiu = false;
 

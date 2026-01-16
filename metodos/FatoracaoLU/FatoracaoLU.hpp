@@ -2,8 +2,9 @@
 
 #include "../SistemaLinear.hpp"
 #include <vector>
+#include <utility>
 
 class FatoracaoLU {
 public:
-    std::vector<double> resolver(const SistemaLinear& sistema);
+    std::pair<std::vector<double>, std::vector<double>> resolver(const SistemaLinear& sistema);
 };
