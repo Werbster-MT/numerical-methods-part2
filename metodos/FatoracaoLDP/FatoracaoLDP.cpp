@@ -2,6 +2,8 @@
 #include <vector>
 #include <cmath>
 #include <stdexcept>
+#include <iostream> // Adicionado para printar
+#include <iomanip>  // Adicionado para formatar
 
 using namespace std;
 
@@ -16,7 +18,7 @@ vector<double> FatoracaoLDP::resolver(const SistemaLinear& sistema) {
 
     Matriz L(n, Vetor(n, 0.0));
     Matriz D(n, Vetor(n, 0.0));
-    Matriz P(n, Vetor(n, 0.0));
+    Matriz P(n, Vetor(n, 0.0)); // P aqui atua como a Triangular Superior Unitária (U normalizada)
 
     // ==============================
     // INICIALIZAÇÃO
@@ -57,6 +59,41 @@ vector<double> FatoracaoLDP::resolver(const SistemaLinear& sistema) {
             L[j][i] = (A[j][i] - soma) / D[i][i];
         }
     }
+
+    // ==========================================
+    // IMPRESSÃO DAS MATRIZES L, D e P (NOVO TRECHO)
+    // ==========================================
+    cout << fixed << setprecision(4);
+    
+    cout << "\n-----------------------------\n";
+    cout << " Matriz L (Triangular Inferior):" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << " |";
+        for (int j = 0; j < n; j++) {
+            cout << setw(10) << L[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+
+    cout << "\n Matriz D (Diagonal):" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << " |";
+        for (int j = 0; j < n; j++) {
+            cout << setw(10) << D[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+
+    cout << "\n Matriz P (Triangular Superior Unitaria):" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << " |";
+        for (int j = 0; j < n; j++) {
+            cout << setw(10) << P[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << "-----------------------------\n";
+    // ==========================================
 
     // ==============================
     // SUBSTITUIÇÃO DIRETA: Ly = f

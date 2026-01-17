@@ -2,6 +2,8 @@
 #include <vector>
 #include <stdexcept>
 #include <utility>
+#include <iostream> // Adicionado para printar
+#include <iomanip>  // Adicionado para formatar
 
 using namespace std;
 
@@ -46,6 +48,33 @@ std::pair<vector<double>, vector<double>> FatoracaoLU::resolver(const SistemaLin
             }
         }
     }
+
+    // ==========================================
+    // IMPRESSÃO DAS MATRIZES L E U (NOVO TRECHO)
+    // ==========================================
+    cout << fixed << setprecision(4);
+    
+    cout << "\n-----------------------------\n";
+    cout << " Matriz L (Triangular Inferior):" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << " |";
+        for (int j = 0; j < n; j++) {
+            cout << setw(10) << L[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+
+    cout << "\n Matriz U (Triangular Superior):" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << " |";
+        for (int j = 0; j < n; j++) {
+            cout << setw(10) << U[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << "-----------------------------\n";
+    // ==========================================
+
 
     // ==============================
     // SUBSTITUIÇÃO DIRETA: Ly = f

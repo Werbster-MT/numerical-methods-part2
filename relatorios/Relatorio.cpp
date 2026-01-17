@@ -3,55 +3,83 @@
 #include <iomanip>
 #include <cmath>
 #include <vector>
+#include <string>
 
 using namespace std;
 
-// função para imprimir vetores D e Y da fatoração LU
 void Relatorio::imprimir_D_Y(const vector<double>& D, const vector<double>& Y) {
-    cout << "\nVetor D (Deslocamentos):\n";
-    for (size_t i = 0; i < D.size(); ++i) {
-        cout << "D[" << i + 1 << "] = " << D[i] << " cm" << endl;
+    cout << fixed << setprecision(6);
+
+    cout << "\n========================================\n";
+    cout << "         VETORES INTERMEDIARIOS         \n";
+    cout << "========================================\n";
+
+    // --- BLOCO Y AGORA VEM PRIMEIRO ---
+    cout << "\n[ Vetor Y ]\n";
+    cout << string(40, '-') << endl;
+    for (size_t i = 0; i < Y.size(); ++i) {
+        cout << " Y[" << setw(2) << i + 1 << "] = " << setw(12) << Y[i] << endl;
     }
 
-    // vetor para calcular D
-    cout << "\nVetor Y:\n";
-    for (size_t i = 0; i < Y.size(); ++i) {
-        cout << "Y[" << i + 1 << "] = " << Y[i] << endl;
+    // --- BLOCO D VEM DEPOIS ---
+    cout << "\n[ Vetor D (Deslocamentos) ]\n";
+    cout << string(40, '-') << endl;
+    for (size_t i = 0; i < D.size(); ++i) {
+        cout << " D[" << setw(2) << i + 1 << "] = " << setw(12) << D[i] << " cm" << endl;
     }
+    
+    cout << endl;
 }
 
 void Relatorio::imprimirQuadroResposta(const std::vector<double> deslocamentos) {
-    cout << "\n>>> QUADRO DE RESPOSTA (D) <<<\n";
+    cout << "\n==============================================\n";
+    cout << "            QUADRO DE RESPOSTA (D)            \n";
+    cout << "==============================================\n";
+    
     cout << setprecision(6) << fixed;
     bool explodiu = false;
 
     for (size_t i = 0; i < deslocamentos.size(); ++i) {
         double d = deslocamentos[i];
-        cout << "d[" << i + 1 << "] = " << setw(10) << d << " cm";
+        cout << " d[" << setw(2) << i + 1 << "] = " << setw(12) << d << " cm";
         if (fabs(d) > 2.0) {
-            cout << " [ALERTA: EXCEDEU 2cm!]";
+            cout << "   <-- [ALERTA: EXCEDEU 2cm!]";
             explodiu = true;
         }
         cout << endl;
     }
 
+    cout << string(46, '-') << endl;
     if (explodiu) {
-        cout << "\nSTATUS FINAL: O JATO EXPLODIU! (Prejuizo gigantesco)\n";
+        cout << " STATUS FINAL: O JATO EXPLODIU! (FALHA CRITICA)\n";
     } else {
-        cout << "\nSTATUS FINAL: O JATO ESTA SEGURO.\n";
+        cout << " STATUS FINAL: O JATO ESTA SEGURO (OK)\n";
     }
+    cout << "==============================================\n";
 }
 
 void Relatorio::imprimirQuadroComparativo(const std::vector<double> d1, const std::vector<double> d2) {
-    cout << "\n>>> COMPARATIVO LU vs LDP <<<\n";
-    cout << setw(6) << " di" << " | " << setw(15) << "LU (cm)" << " | " << setw(15) << "LDP (cm)" << " | " << setw(15) << "Diferenca" << endl;
-    cout << string(60, '-') << endl;
+    int w_col = 16; 
+
+    cout << "\n===================================================================\n";
+    cout << "                       COMPARATIVO LU vs LDP                       \n";
+    cout << "===================================================================\n";
+    
+    cout << setprecision(6) << fixed;
+
+    cout << setw(6) << "Indice" << " | " 
+         << setw(w_col) << "LU (cm)" << " | " 
+         << setw(w_col) << "LDP (cm)" << " | " 
+         << setw(w_col) << "Diferenca" << endl;
+
+    cout << string(67, '-') << endl;
     
     for (size_t i = 0; i < d1.size(); ++i) {
         double diff = fabs(d1[i] - d2[i]);
-        cout << setw(5) << "d" << i + 1 << " | " 
-             << setw(15) << d1[i] << " | " 
-             << setw(15) << d2[i] << " | " 
-             << setw(15) << diff << endl;
+        cout << setw(6) << i + 1 << " | " 
+             << setw(w_col) << d1[i] << " | " 
+             << setw(w_col) << d2[i] << " | " 
+             << setw(w_col) << diff << endl;
     }
+    cout << "===================================================================\n";
 }
