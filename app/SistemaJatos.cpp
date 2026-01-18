@@ -73,7 +73,6 @@ SistemaLinear SistemaJatos::obterSistema() {
 }
 
 void SistemaJatos::executar() {
-    // Objetos auxiliares
     Menu menu;
     Relatorio relatorio;
     FatoracaoLU solverLU;
@@ -93,7 +92,6 @@ void SistemaJatos::executar() {
                 case 1: {
                     std::cout << "\n[Calculando via Fatoracao LU...]\n";
                     SistemaLinear sistema = obterSistema();
-                    // std::vector<double> d, y = solverLU.resolver(sistema), solverLU.imprimir_D_Y(d, y);
                     auto [d, y] = solverLU.resolver(sistema);
                     relatorio.imprimir_D_Y(d, y);
                     relatorio.imprimirQuadroResposta(d);
@@ -107,20 +105,6 @@ void SistemaJatos::executar() {
                     relatorio.imprimirQuadroResposta(d);
                     break;
                 }
-
-                // case 3: {
-                //     std::cout << "\n[Realizando Analise Comparativa...]\n";
-                //     SistemaLinear sistema = obterSistema();
-                //     std::vector<double> d_lu  = solverLU.resolver(sistema);
-                //     // std::pair<vector<double> d_lu, vector<double>> _ = solverLU.resolver(sistema);
-                //     std::vector<double> d_ldp = solverLDP.resolver(sistema);
-
-                //     relatorio.imprimirQuadroComparativo(d_lu, d_ldp);
-
-                //     std::cout << "Analise Estrutural (Baseada no LDP):\n";
-                //     relatorio.imprimirQuadroResposta(d_ldp);
-                //     break;
-                // }
 
                 case 3: {
                     std::cout << "\n[Realizando Analise Comparativa...]\n";
@@ -145,6 +129,63 @@ void SistemaJatos::executar() {
 
         } catch (const std::exception& e) {
             std::cerr << "\nERRO NUMERICO: " << e.what() << std::endl;
+        }
+    }
+}
+
+void SistemaJatos::executarModoWeb() {
+    int opcaoMetodo; 
+    std::cin >> opcaoMetodo; 
+
+    int n;
+    std::cin >> n;
+
+    SistemaLinear sistema(n);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            std::cin >> sistema.A[i][j];
+
+    for (int i = 0; i < n; i++)
+        std::cin >> sistema.f[i];
+
+    std::cout << std::fixed << std::setprecision(6); 
+
+    if (opcaoMetodo == 3) {
+        FatoracaoLU solverLU;
+        FatoracaoLDP solverLDP;
+
+        auto resLU = solverLU.resolver(sistema);
+        std::vector<double> d_lu = resLU.first; 
+
+        std::vector<double> d_ldp = solverLDP.resolver(sistema);
+
+        for (size_t i = 0; i < d_lu.size(); i++) {
+            double diff = std::abs(d_lu[i] - d_ldp[i]);
+            
+            std::cout << "COMPARE;" 
+                      << "d" << (i + 1) << ";" 
+                      << d_lu[i] << ";" 
+                      << d_ldp[i] << ";" 
+                      << diff << std::endl;
+        }
+
+    } else {
+        std::vector<double> d;
+        
+        if (opcaoMetodo == 1) {
+            FatoracaoLU solverLU;
+            auto resultado = solverLU.resolver(sistema);
+            d = resultado.first;
+        } else {
+            FatoracaoLDP solverLDP;
+            d = solverLDP.resolver(sistema);
+        }
+
+        for (size_t i = 0; i < d.size(); i++) {
+            double valor = d[i];
+            std::string status = (std::abs(valor) > 2.0) ? "CRITICO" : "OK";
+            std::cout << "d" << (i + 1) << ";" << valor << ";" << status << std::endl;
         }
     }
 }

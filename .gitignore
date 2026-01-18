@@ -13,6 +13,7 @@ sistema_jatos
 build/
 bin/
 lib/
+.venv/
 
 # --- Arquivos gerados pelo CMake na raiz  ---
 CMakeCache.txt
