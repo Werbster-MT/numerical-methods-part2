@@ -21,6 +21,7 @@ class SistemaJatos {
 
     public:
         // SistemaJatos();
-
+        // Adicione a declaração
+        void executarModoWeb();
         void executar();
 };
